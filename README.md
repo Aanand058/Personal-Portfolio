@@ -125,11 +125,6 @@ Personal-Portfolio/
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
 
 ## 🤝 Contributing
 
@@ -137,4 +132,4 @@ Suggestions and feedback are welcome! Feel free to open an issue or submit a pul
 
 ---
 
-**Built with ❤️ by Aanand Aman** 
+**Built by Aanand Aman** 
