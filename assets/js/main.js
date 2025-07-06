@@ -61,6 +61,15 @@ sr.reveal('.featured-image',{delay: 300})
 /* -- PROJECT BOX -- */
 sr.reveal('.project-box',{interval: 200})
 
+/* -- EDUCATION BOX -- */
+sr.reveal('.education-box',{interval: 200})
+
+/* -- EXPERIENCE BOX -- */
+sr.reveal('.experience-box',{interval: 200})
+
+/* -- CERTIFICATIONS BOX -- */
+sr.reveal('.certification-box',{interval: 150})
+
 /* -- HEADINGS -- */
 sr.reveal('.top-header',{})
 
