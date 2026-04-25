@@ -454,11 +454,10 @@ h3 {
 
 /* ----- PROJECTS BOX ----- */
 .project-container {
-    display: flex;
+    display: grid;
     width: 100%;
-    justify-content: space-between;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--gap-md);
-    flex-wrap: wrap;
 }
 
 .project-box {
@@ -467,8 +466,11 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 30%;
-    height: 250px;
+    width: 100%;
+    min-height: 250px;
+    height: auto;
+    padding: 22px;
+    text-align: center;
     background: var(--color-white);
     border-radius: 20px;
     box-shadow: 1px 8px 10px 2px var(--first-shadow-color);
@@ -503,12 +505,11 @@ h3 {
 }
 
 .project-box.featured-project {
-    width: 100%;
-    height: auto;
     min-height: 250px;
     align-items: flex-start;
     justify-content: flex-start;
     padding: 26px;
+    text-align: left;
 }
 
 .project-box.featured-project>i {
@@ -529,13 +530,13 @@ h3 {
 
 .project-link {
     display: block;
-    width: 30%;
+    width: 100%;
     text-decoration: none;
     color: inherit;
 }
 
 .project-link-featured {
-    width: 100%;
+    grid-column: 1 / -1;
 }
 
 .project-tech {
@@ -1227,15 +1228,7 @@ footer {
     }
 
     .project-container {
-        justify-content: center;
-    }
-
-    .project-box {
-        width: 80%;
-    }
-
-    .project-link {
-        width: 80%;
+        grid-template-columns: 1fr;
     }
 
     .education-header {
@@ -1339,12 +1332,8 @@ footer {
         padding: 5px 9px;
     }
 
-    .project-box {
-        width: 100%;
-    }
-
-    .project-link {
-        width: 100%;
+    .project-container {
+        grid-template-columns: 1fr;
     }
 
     .form-inputs {
