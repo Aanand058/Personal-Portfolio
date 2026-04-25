@@ -20,6 +20,21 @@
     --third-color: rgb(192, 166, 49);
     --first-shadow-color: rgba(0, 0, 0, 0.1);
 
+    --border-color: rgba(15, 23, 42, 0.08);
+    --shadow-sm: 0 8px 18px rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 16px 34px rgba(15, 23, 42, 0.12);
+    --radius-lg: 20px;
+
+    /* Layout + spacing tokens (keeps visual identity, improves consistency) */
+    --container-max: 1400px;
+    --container-pad: clamp(22px, 7vw, 120px);
+    --section-pad: 6.5em;
+    --section-pad-mobile: 5em;
+    --section-header-gap: 4em;
+    --section-header-gap-mobile: 3em;
+    --gap-xl: 50px;
+    --gap-lg: 30px;
+    --gap-md: 20px;
 }
 
 /* ----- BASE ----- */
@@ -33,6 +48,17 @@
 /* ----- SMOOTH SCROLL ----- */
 html {
     scroll-behavior: smooth;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* ----- CHANGE THE SCROLL BAR DESIGN ----- */
@@ -66,6 +92,7 @@ html {
     border-radius: 10px;
     cursor: pointer;
     transition: .4s;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
 }
 
 .btn>i {
@@ -75,6 +102,7 @@ html {
 .btn:hover {
     background: var(--second-color);
     color: var(--color-white);
+    transform: translateY(-1px);
 }
 
 /* ----- GLOBAL ICONS DESIGN ----- */
@@ -101,9 +129,10 @@ nav {
     height: 90px;
     line-height: 90px;
     background: var(--body-color);
-    padding-inline: 9vw;
+    padding-inline: var(--container-pad);
     transition: .3s;
     z-index: 100;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.04);
 }
 
 .nav-logo {
@@ -172,7 +201,10 @@ nav {
 
 /* ----- WRAPPER DESIGN ----- */
 .wrapper {
-    padding-inline: 10vw;
+    /* More spacious on large screens, still balanced */
+    padding-inline: var(--container-pad);
+    max-width: var(--container-max);
+    margin-inline: auto;
 }
 
 /* ----- FEATURED BOX ----- */
@@ -311,14 +343,14 @@ nav {
 
 /* ----- MAIN BOX ----- */
 .section {
-    padding-block: 5em;
+    padding-block: var(--section-pad);
 }
 
 .row {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 50px;
+    gap: var(--gap-xl);
 }
 
 .col {
@@ -329,7 +361,11 @@ nav {
 /* -- ## --- RESUABLE CSS -- ## -- */
 .top-header {
     text-align: center;
-    margin-bottom: 5em;
+    margin-bottom: var(--section-header-gap);
+}
+
+section[id] {
+    scroll-margin-top: 95px;
 }
 
 .top-header h1 {
@@ -369,6 +405,10 @@ h3 {
     color: #777;
 }
 
+.about-info p + p {
+    margin-top: 12px;
+}
+
 .about-btn button {
     position: absolute;
     right: 20px;
@@ -383,8 +423,15 @@ h3 {
 }
 
 /* ----- ABOUT / SKILLS BOX ----- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-md);
+    width: 100%;
+}
+
 .skills-box {
-    margin: 10px;
+    margin: 0;
 }
 
 .skills-header {
@@ -394,7 +441,7 @@ h3 {
 .skills-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 7px;
 }
 
 .skills-list span {
@@ -410,7 +457,7 @@ h3 {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    gap: 20px;
+    gap: var(--gap-md);
     flex-wrap: wrap;
 }
 
@@ -426,6 +473,118 @@ h3 {
     border-radius: 20px;
     box-shadow: 1px 8px 10px 2px var(--first-shadow-color);
     overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.project-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    transition: border-color .25s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.project-link .project-box {
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .project-link:hover .project-box {
+        transform: translateY(-6px) scale(1.015);
+        box-shadow: var(--shadow-md);
+    }
+
+    .project-link:hover .project-box::before {
+        border-color: rgba(0, 201, 255, 0.35);
+    }
+}
+
+.project-box.featured-project {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 26px;
+}
+
+.project-box.featured-project>i {
+    margin-bottom: 14px;
+}
+
+.project-desc {
+    margin-top: 12px;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.project-box.featured-project:hover .project-desc {
+    color: rgba(255, 255, 255, 0.92);
+    z-index: 2;
+}
+
+.project-link {
+    display: block;
+    width: 30%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-link-featured {
+    width: 100%;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+    z-index: 2;
+}
+
+.project-tech span {
+    font-size: 12px;
+    background: rgba(110, 87, 224, 0.12);
+    color: var(--text-color-second);
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(110, 87, 224, 0.18);
+    font-weight: 500;
+}
+
+.project-box:hover .project-tech span {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.project-link:visited {
+    color: inherit;
+}
+
+.project-link .project-box {
+    width: 100%;
+}
+
+.project-link .project-box:hover {
+    cursor: pointer;
+}
+
+.project-link:focus-visible {
+    outline: 3px solid rgba(110, 87, 224, 0.35);
+    outline-offset: 6px;
+    border-radius: 20px;
+}
+
+.certification-meta {
+    font-size: 12px;
+    color: var(--text-color-second);
+    margin-top: 6px;
+    font-weight: 500;
 }
 
 .project-box>i {
@@ -467,7 +626,7 @@ h3 {
 .education-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: var(--gap-lg);
     width: 100%;
 }
 
@@ -563,7 +722,7 @@ h3 {
 .experience-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: var(--gap-lg);
     width: 100%;
 }
 
@@ -677,7 +836,7 @@ h3 {
 .certifications-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 20px;
+    gap: var(--gap-md);
     width: 100%;
 }
 
@@ -779,7 +938,7 @@ h3 {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 70vh;
+    min-height: 70vh;
 }
 
 .contact-info-upper-container {
@@ -929,6 +1088,9 @@ footer {
 
 .middle-footer .footer-menu {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
 }
 
 .footer_menu_list {
@@ -940,6 +1102,8 @@ footer {
     color: var(--text-color-second);
     font-weight: 500;
     margin-inline: 20px;
+    display: inline-block;
+    padding: 8px 4px;
 }
 
 .footer-social-icons {
@@ -1004,7 +1168,10 @@ footer {
     .featured-box {
         flex-direction: column;
         justify-content: center;
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
+        padding-top: 110px;
+        padding-bottom: 30px;
     }
 
     .featured-text {
@@ -1013,6 +1180,10 @@ footer {
         justify-content: center;
         align-content: flex-start;
         min-height: 60vh;
+    }
+
+    .featured-text-btn {
+        flex-wrap: wrap;
     }
 
     .social_icons {
@@ -1046,6 +1217,10 @@ footer {
         width: 100%;
     }
 
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
     .about-info,
     .contact-info {
         width: 100%;
@@ -1056,6 +1231,10 @@ footer {
     }
 
     .project-box {
+        width: 80%;
+    }
+
+    .project-link {
         width: 80%;
     }
 
@@ -1112,11 +1291,59 @@ footer {
 /* ----- MEDIA QUERY == 540px / RESPONSIVE ----- */
 
 @media only screen and (max-width: 540px) {
+    .section {
+        padding-block: var(--section-pad-mobile);
+    }
+
+    .top-header {
+        margin-bottom: var(--section-header-gap-mobile);
+    }
+
     .featured-name {
-        font-size: 40px;
+        font-size: 36px;
+    }
+
+    .featured-text-info {
+        font-size: 14px;
+    }
+
+    .featured-text-btn {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .featured-text-btn .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .social_icons {
+        gap: 18px;
+    }
+
+    .project-box.featured-project {
+        padding: 22px;
+    }
+
+    .project-desc {
+        font-size: 13px;
+    }
+
+    .project-tech {
+        gap: 6px;
+    }
+
+    .project-tech span {
+        font-size: 11px;
+        padding: 5px 9px;
     }
 
     .project-box {
+        width: 100%;
+    }
+
+    .project-link {
         width: 100%;
     }
 
